@@ -1,0 +1,10 @@
+# Constitución del Proyecto: ProAim
+
+1. **Stack Tecnológico Estricto:** El desarrollo utiliza exclusivamente Next.js (React), Tailwind CSS y PostgreSQL. No se permiten librerías externas no autorizadas.
+2. **Identidad de Marca:** Todo componente visual debe aplicar rigurosamente los tokens de diseño y variables CSS definidos en `docs/IDENTIDAD-MARCA.md`. Quedan prohibidos los estilos incrustados (hardcodeados).
+3. **Desarrollo Guiado por Especificaciones (SDD):** Ninguna línea de código se escribe sin su respectiva especificación formal ubicada en la carpeta `specs/`.
+4. **Calidad y Pruebas Automatizadas:** Cada funcionalidad principal debe incluir tests unitarios o de integración que deben pasar satisfactoriamente en verde (`npm test`) antes de cerrar la tarea.
+5. **Seguridad de Datos:** Está terminantemente prohibido almacenar credenciales, claves de API o secretos en el repositorio o exponerlos en chats con la IA. Se gestionarán estrictamente mediante variables de entorno.
+6. **Idioma, Documentación y Commits:** Todo el proyecto, código, documentación y mensajes de commit se redactarán en español formal. Los commits seguirán las convenciones estándar (`feat:`, `fix:`, `docs:`).
+7. **Diseño Responsivo y Accesible:** El sistema debe construirse bajo el paradigma mobile-first (desde 360px), garantizando contraste adecuado, etiquetas de texto alternativo en imágenes y navegación accesible por teclado.
+8. **Uso Responsable y Ético de la IA:** La Inteligencia Artificial es una herramienta asistiva y de consulta bajo supervisión humana estricta. El autor (Maximiliano) valida, comprende y asume la total responsabilidad de cada línea de código y contenido generado, asegurando el respeto por la propiedad intelectual y evitando el uso de datos o rostros de personas reales sin consentimiento explícito.
