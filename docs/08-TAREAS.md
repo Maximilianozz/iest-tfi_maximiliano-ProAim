@@ -11,8 +11,8 @@
 - [ ] Configurar la base de datos PostgreSQL.
 
 ## Fase 3: Desarrollo Frontend y Backend
-- [ ] Implementar la Landing Page interactiva con modo oscuro.
-- [ ] Desarrollar el catálogo de servicios de coaching con filtros.
+- [x] Implementar la Landing Page interactiva con modo oscuro.
+- [x] Desarrollar el catálogo de servicios de coaching con filtros por videojuego y rol (datos de muestra).
 - [ ] Construir la pasarela de pago y sistema de reservas.
 
 ## Fase 4: Pruebas y Publicación
