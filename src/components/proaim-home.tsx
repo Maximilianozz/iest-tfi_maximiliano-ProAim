@@ -395,7 +395,7 @@ export default function ProAimHome() {
             </span>
           </a>
           <p>Del nivel amateur al rendimiento profesional.</p>
-          <span className="footer-copyright">© {new Date().getFullYear()} PROAIM ACADEMY</span>
+          <span className="footer-copyright">© 2026 PROAIM ACADEMY</span>
         </div>
       </footer>
 
