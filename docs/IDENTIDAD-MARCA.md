@@ -6,7 +6,7 @@
 * **Misión:** Potenciar el talento de los jugadores de videojuegos competitivos mediante análisis de datos avanzados y entrenadores profesionales, democratizando el acceso al alto rendimiento.
 * **Visión:** Convertirnos en la academia de e-sports de referencia en Latinoamérica, formando a la próxima generación de atletas profesionales de los deportes electrónicos.
 * **Personalidad:** Innovadora, enérgica, analítica, competitiva, moderna y directa.
-* **Público Objetivo:** Gamers competitivos de entre 14 y 28 años que juegan títulos como Valorant, League of Legends o Counter-Strike y desean mejorar su ranking de forma estructurada.
+* **Público Objetivo:** Gamers competitivos de entre 14 y 28 años que juegan shooters como Valorant, Counter-Strike 2 o Delta Force y desean mejorar su rendimiento de forma estructurada.
 
 ## Versiones del Logo
 * **Logotipo Principal:** Isotipo minimalista con una mira geométrica cruzada con un rayo eléctrico y tipografía futurista en caja alta.

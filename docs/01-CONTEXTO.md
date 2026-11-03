@@ -8,7 +8,7 @@ Desarrollar una plataforma web e-commerce interactiva que permita a los jugadore
 
 ## Público Destinatario
 * Gamers competitivos de 14 a 28 años.
-* Jugadores de títulos populares como Valorant, League of Legends y CS2.
+* Jugadores de shooters competitivos como Valorant, Counter-Strike 2 y Delta Force.
 * Equipos amateur de e-sports que buscan mejorar su estrategia táctica colectiva.
 
 ## Catálogo de Productos y Servicios

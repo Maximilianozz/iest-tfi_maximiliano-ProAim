@@ -8,8 +8,82 @@ import {
   services,
   type CategoryFilter,
   type CoachingService,
+  type Game,
   type GameFilter,
 } from "@/lib/services";
+
+type PerformanceMetrics = {
+  accuracy: number;
+  reactionTime: number;
+  recoilControl: number;
+};
+
+type TrainingModule = {
+  id: string;
+  title: string;
+  game: Game | "Todos los juegos";
+  level: string;
+  duration: string;
+  summary: string;
+  drills: string[];
+};
+
+type SensitivitySettings = Record<Game, { dpi: string; sensitivity: string }>;
+
+const performanceByGame: Record<Game, PerformanceMetrics> = {
+  Valorant: { accuracy: 68, reactionTime: 224, recoilControl: 72 },
+  "Counter-Strike 2": { accuracy: 64, reactionTime: 238, recoilControl: 78 },
+  "Delta Force": { accuracy: 71, reactionTime: 216, recoilControl: 66 },
+};
+
+const trainingModules: TrainingModule[] = [
+  {
+    id: "flicks",
+    title: "Flicks y microajustes",
+    game: "Todos los juegos",
+    level: "Fundamentos",
+    duration: "12 min",
+    summary:
+      "Mejora la adquisición de objetivos y termina cada flick con un microajuste controlado.",
+    drills: ["Adquisición de objetivos", "Flick y confirmación", "Precisión bajo presión"],
+  },
+  {
+    id: "tracking",
+    title: "Tracking y seguimiento",
+    game: "Delta Force",
+    level: "Intermedio",
+    duration: "15 min",
+    summary:
+      "Mantén la mira sobre objetivos en movimiento y aprende a anticipar sus cambios de dirección.",
+    drills: ["Seguimiento horizontal", "Cambios de velocidad", "Control de distancia"],
+  },
+  {
+    id: "recoil",
+    title: "Control de recoil",
+    game: "Counter-Strike 2",
+    level: "Intermedio",
+    duration: "18 min",
+    summary:
+      "Practica el contramovimiento de la mira para sostener sprays y transferir entre objetivos.",
+    drills: ["Patrones de spray", "Ráfagas controladas", "Transferencia de objetivo"],
+  },
+  {
+    id: "crosshair",
+    title: "Colocación de mira",
+    game: "Valorant",
+    level: "Táctico",
+    duration: "10 min",
+    summary:
+      "Anticipa ángulos y mantén la mira a la altura adecuada mientras despejas espacios.",
+    drills: ["Despeje de ángulos", "Altura de cabeza", "Pre-aim en movimiento"],
+  },
+];
+
+const initialSensitivity: SensitivitySettings = {
+  Valorant: { dpi: "800", sensitivity: "0.35" },
+  "Counter-Strike 2": { dpi: "800", sensitivity: "1" },
+  "Delta Force": { dpi: "800", sensitivity: "5" },
+};
 
 function ArrowIcon({ diagonal = false }: { diagonal?: boolean }) {
   return diagonal ? (
@@ -40,7 +114,9 @@ function ServiceCard({
   onSelect: (service: CoachingService) => void;
 }) {
   return (
-    <article className={`service-card service-card--${service.game === "Valorant" ? "valorant" : service.game === "League of Legends" ? "league" : "cs2"}`}>
+    <article
+      className={`service-card service-card--${service.game === "Valorant" ? "valorant" : service.game === "Counter-Strike 2" ? "cs2" : "delta-force"}`}
+    >
       <div className="service-art">
         <div className="service-art__top">
           <span className="game-tag">{service.game}</span>
@@ -85,6 +161,10 @@ export default function ProAimHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedService, setSelectedService] =
     useState<CoachingService | null>(null);
+  const [performanceGame, setPerformanceGame] = useState<Game>("Valorant");
+  const [activeModuleId, setActiveModuleId] = useState(trainingModules[0].id);
+  const [sensitivity, setSensitivity] =
+    useState<SensitivitySettings>(initialSensitivity);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -114,6 +194,22 @@ export default function ProAimHome() {
       return matchesGame && matchesRole && matchesCategory && matchesSearch;
     });
   }, [search, selectedCategory, selectedGame, selectedRole]);
+
+  const activeModule =
+    trainingModules.find((module) => module.id === activeModuleId) ??
+    trainingModules[0];
+  const activeMetrics = performanceByGame[performanceGame];
+
+  function updateSensitivity(
+    game: Game,
+    field: "dpi" | "sensitivity",
+    value: string,
+  ) {
+    setSensitivity((current) => ({
+      ...current,
+      [game]: { ...current[game], [field]: value },
+    }));
+  }
 
   function resetFilters() {
     setSelectedGame("Todos");
@@ -150,11 +246,12 @@ export default function ProAimHome() {
           </button>
 
           <nav className={`main-nav${menuOpen ? " main-nav--open" : ""}`} aria-label="Navegación principal">
-            <a href="#metodo" onClick={closeMenu}>Metodología</a>
+            <a href="#metricas" onClick={closeMenu}>Métricas</a>
+            <a href="#modulos" onClick={closeMenu}>Entrenamiento</a>
+            <a href="#sensibilidad" onClick={closeMenu}>Sensibilidad</a>
             <a href="#servicios" onClick={closeMenu}>Servicios</a>
-            <a href="#academia" onClick={closeMenu}>La academia</a>
             <a className="nav-cta" href="#servicios" onClick={closeMenu}>
-              Encuentra tu coach <ArrowIcon diagonal />
+              Empieza a entrenar <ArrowIcon diagonal />
             </a>
           </nav>
         </div>
@@ -224,6 +321,66 @@ export default function ProAimHome() {
           {games.map((game, index) => (
             <span key={game}><i>0{index + 1}</i>{game}</span>
           ))}
+        </div>
+      </section>
+
+      <section className="performance-section section-shell" id="metricas">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">MIDE. AJUSTA. REPITE. <span className="eyebrow-line" /></p>
+            <h2>Tu rendimiento, <span className="text-gradient">en foco.</span></h2>
+          </div>
+          <p className="section-intro">
+            Sigue indicadores clave de puntería y explora cómo cambian según el juego.
+          </p>
+        </div>
+        <div className="performance-panel">
+          <div className="performance-panel__header">
+            <div>
+              <span className="panel-kicker">RESUMEN DE RENDIMIENTO</span>
+              <p>Selecciona un juego para ver sus métricas de ejemplo.</p>
+            </div>
+            <div className="game-switcher" role="group" aria-label="Juego para las métricas">
+              {games.map((game) => (
+                <button
+                  type="button"
+                  key={game}
+                  className={performanceGame === game ? "game-switcher__active" : ""}
+                  aria-pressed={performanceGame === game}
+                  onClick={() => setPerformanceGame(game)}
+                >
+                  {game}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="metric-grid" aria-live="polite">
+            <article className="metric-card">
+              <div className="metric-card__top"><span>Precisión</span><span className="metric-indicator">01 / AIM</span></div>
+              <strong>{activeMetrics.accuracy}<small>%</small></strong>
+              <div className="metric-track" role="progressbar" aria-label={`Precisión en ${performanceGame}`} aria-valuenow={activeMetrics.accuracy} aria-valuemin={0} aria-valuemax={100}>
+                <span style={{ width: `${activeMetrics.accuracy}%` }} />
+              </div>
+              <p>Impactos acertados en el ejercicio</p>
+            </article>
+            <article className="metric-card">
+              <div className="metric-card__top"><span>Tiempo de reacción</span><span className="metric-indicator">02 / REACT</span></div>
+              <strong>{activeMetrics.reactionTime}<small> ms</small></strong>
+              <div className="metric-track metric-track--reaction" role="img" aria-label={`Tiempo de reacción de ejemplo: ${activeMetrics.reactionTime} milisegundos`}>
+                <span style={{ width: `${Math.min(100, (activeMetrics.reactionTime / 350) * 100)}%` }} />
+              </div>
+              <p>Promedio de respuesta al objetivo</p>
+            </article>
+            <article className="metric-card">
+              <div className="metric-card__top"><span>Control de recoil</span><span className="metric-indicator">03 / CONTROL</span></div>
+              <strong>{activeMetrics.recoilControl}<small>%</small></strong>
+              <div className="metric-track" role="progressbar" aria-label={`Control de recoil en ${performanceGame}`} aria-valuenow={activeMetrics.recoilControl} aria-valuemin={0} aria-valuemax={100}>
+                <span style={{ width: `${activeMetrics.recoilControl}%` }} />
+              </div>
+              <p>Estabilidad durante el patrón de disparo</p>
+            </article>
+          </div>
+          <p className="demo-disclaimer">DATOS DE EJEMPLO · Se reemplazarán por métricas reales al conectar el sistema de entrenamiento.</p>
         </div>
       </section>
 
@@ -330,6 +487,136 @@ export default function ProAimHome() {
             </button>
           </div>
         )}
+      </section>
+
+      <section className="training-section" id="modulos">
+        <div className="section-shell">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">ENTRENA CON INTENCIÓN <span className="eyebrow-line" /></p>
+              <h2>Módulos para jugar <span className="text-gradient">mejor.</span></h2>
+            </div>
+            <p className="section-intro">
+              Rutinas tácticas para desarrollar precisión, control y lectura del combate.
+            </p>
+          </div>
+          <div className="training-layout">
+            <div className="module-list" role="group" aria-label="Módulos de entrenamiento">
+              {trainingModules.map((module, index) => (
+                <button
+                  type="button"
+                  aria-pressed={activeModuleId === module.id}
+                  className={`module-option${activeModuleId === module.id ? " module-option--active" : ""}`}
+                  key={module.id}
+                  onClick={() => setActiveModuleId(module.id)}
+                >
+                  <span className="module-option__number">0{index + 1}</span>
+                  <span className="module-option__title">{module.title}</span>
+                  <ArrowIcon diagonal />
+                </button>
+              ))}
+            </div>
+            <article
+              className="module-detail"
+              aria-live="polite"
+            >
+              <div className="module-detail__top">
+                <span className="game-tag">{activeModule.game}</span>
+                <span className="module-duration">{activeModule.duration}</span>
+              </div>
+              <p className="eyebrow">{activeModule.level} <span className="eyebrow-line" /></p>
+              <h3>{activeModule.title}</h3>
+              <p className="module-detail__summary">{activeModule.summary}</p>
+              <h4>EN ESTA RUTINA</h4>
+              <ul>
+                {activeModule.drills.map((drill, index) => (
+                  <li key={drill}><span>0{index + 1}</span>{drill}</li>
+                ))}
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="sensitivity-section section-shell" id="sensibilidad">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">ENCUENTRA TU CONFIGURACIÓN <span className="eyebrow-line" /></p>
+            <h2>Una referencia. <span className="text-gradient">Tres juegos.</span></h2>
+          </div>
+          <p className="section-intro">
+            Compara tus ajustes y calcula el eDPI de cada juego desde un mismo panel.
+          </p>
+        </div>
+        <div className="sensitivity-panel">
+          <div className="sensitivity-panel__intro">
+            <div>
+              <span className="panel-kicker">COMPARADOR DE SENSIBILIDAD</span>
+              <p>Valores de ejemplo editables: ingresa tu DPI y sensibilidad en cada juego.</p>
+            </div>
+            <span className="sensitivity-badge"><span className="status-dot" /> CALCULADORA INTERACTIVA</span>
+          </div>
+          <div className="sensitivity-grid">
+            {games.map((game) => {
+              const dpi = Number(sensitivity[game].dpi);
+              const gameSensitivity = Number(sensitivity[game].sensitivity);
+              const effectiveDpi =
+                Number.isFinite(dpi) &&
+                Number.isFinite(gameSensitivity) &&
+                dpi > 0 &&
+                dpi <= 32000 &&
+                gameSensitivity >= 0.01 &&
+                gameSensitivity <= 20
+                  ? Math.round(dpi * gameSensitivity * 100) / 100
+                  : null;
+
+              return (
+                <article className="sensitivity-card" key={game}>
+                  <div className="sensitivity-card__header">
+                    <span className="game-tag">{game}</span>
+                    <span className="service-code">CONFIG / {games.indexOf(game) + 1}</span>
+                  </div>
+                  <div className="sensitivity-inputs">
+                    <label>
+                      <span>DPI</span>
+                      <input
+                        type="number"
+                        min="100"
+                        max="32000"
+                        step="100"
+                        inputMode="numeric"
+                        value={sensitivity[game].dpi}
+                        onChange={(event) => updateSensitivity(game, "dpi", event.target.value)}
+                        aria-label={`DPI para ${game}`}
+                      />
+                    </label>
+                    <label>
+                      <span>Sensibilidad</span>
+                      <input
+                        type="number"
+                        min="0.01"
+                        max="20"
+                        step="0.01"
+                        value={sensitivity[game].sensitivity}
+                        onChange={(event) => updateSensitivity(game, "sensitivity", event.target.value)}
+                        aria-label={`Sensibilidad en ${game}`}
+                      />
+                    </label>
+                  </div>
+                  <div className="edpi-result">
+                    <span>eDPI <span aria-hidden="true">= DPI × sens.</span></span>
+                    <strong aria-live="polite">{effectiveDpi === null ? "—" : String(effectiveDpi)}</strong>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+          <p className="sensitivity-note">
+            El eDPI es una referencia de comparación dentro de cada juego. No
+            representa una equivalencia exacta entre títulos, ya que cada uno
+            interpreta la sensibilidad de forma distinta.
+          </p>
+        </div>
       </section>
 
       <section className="method-section" id="metodo">

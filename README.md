@@ -1,7 +1,7 @@
 # ProAim Esports Academy
 
-Landing page y catálogo inicial de servicios de coaching para Valorant, League
-of Legends y Counter-Strike 2. La interfaz está construida con Next.js App
+Landing page y catálogo inicial de entrenamiento competitivo para Valorant,
+Counter-Strike 2 y Delta Force. La interfaz está construida con Next.js App
 Router, React y Tailwind CSS, y aplica la identidad visual de ProAim.
 
 ## Alcance actual
@@ -9,6 +9,8 @@ Router, React y Tailwind CSS, y aplica la identidad visual de ProAim.
 - Landing page oscura y adaptable a móviles y escritorio.
 - Catálogo de muestra con filtros combinables por juego, rol, tipo de servicio
   y texto de búsqueda.
+- Panel de métricas de ejemplo, módulos de práctica táctica y comparador
+  interactivo de sensibilidad y DPI.
 - Estado vacío con opción para restablecer los filtros.
 - Vista de detalles que informa que la disponibilidad y los valores requieren
   conectar el sistema de reservas.

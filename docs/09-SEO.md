@@ -4,8 +4,8 @@
 
 ### Página de Inicio (Home)
 * **Título**: `ProAim Esports Academy | Coaching Profesional de E-sports`
-* **Descripción**: `Mejora tu nivel y sube de rango en Valorant, LoL y CS2 con nuestros coaches profesionales y análisis de partidas personalizadas.`
-* **Palabras Clave**: `coaching esports, coaching valorant, subir de rango, entrenamiento gaming, proaim academy`
+* **Descripción**: `Mejora tu puntería en Valorant, Counter-Strike 2 y Delta Force con entrenamiento competitivo y análisis de rendimiento.`
+* **Palabras Clave**: `aim training, coaching esports, coaching valorant, entrenamiento de puntería, ProAim Academy`
 
 ### Página de Catálogo
 * **Título**: `Servicios de Coaching y Replay Review | ProAim`

@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ProAim Esports Academy | Coaching Profesional de E-sports",
   description:
-    "Mejora tu nivel en Valorant, League of Legends y Counter-Strike 2 con entrenamiento competitivo y análisis de partidas.",
+    "Mejora tu puntería en Valorant, Counter-Strike 2 y Delta Force con entrenamiento competitivo, análisis de rendimiento y práctica táctica.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
